@@ -1,0 +1,34 @@
+<!doctype html>
+<meta charset="utf-8">
+<style>
+  body { width: 300px; margin: 12px; font: 13px system-ui, sans-serif; }
+  label { display: block; margin: 8px 0 2px; font-weight: 600; }
+  input:not([type=checkbox]), select { width: 100%; box-sizing: border-box; padding: 4px; }
+  .row { display: flex; gap: 6px; align-items: center; margin-top: 10px; }
+  #status { color: #666; margin-top: 8px; min-height: 1em; }
+  kbd { font: 11px monospace; border: 1px solid #ccc; border-radius: 3px; padding: 0 3px; }
+</style>
+
+<label for="voice">Voice</label>
+<select id="voice"></select>
+
+<label for="rate">Speed</label>
+<select id="rate"></select>
+
+<div class="row">
+  <input id="mode" type="checkbox">
+  <label for="mode" style="margin:0;font-weight:400">Reading mode: click any text to read from there</label>
+</div>
+
+<details>
+  <summary style="margin-top:10px;cursor:pointer">Azure key</summary>
+  <label for="key">Key (filled from .env)</label>
+  <input id="key" type="password" autocomplete="off">
+  <label for="region">Region</label>
+  <input id="region" placeholder="e.g. westeurope">
+</details>
+
+<div id="status">Alt+click any text to read from there. <kbd>Alt+Shift+R</kbd> toggles reading mode, <kbd>Esc</kbd> stops.</div>
+
+<script src="src/platform.js"></script>
+<script src="popup.js" type="module"></script>
