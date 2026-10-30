@@ -30,6 +30,7 @@ Reads web pages aloud with Azure neural voices, local Kokoro on your own GPU, or
 | `src/text.js` | ✓ | ✓ | Page text from the clicked word onward, sentence splitting, mapping text positions back to the page |
 | `src/reader.js` | ✓ | ✓ | Click handling, highlighting (CSS Custom Highlight API), floating bar |
 | `background.js` | ✓ | ✓ | Loads `.env`, relays Kokoro requests, keyboard shortcut |
+| `popup.*` | ✓ | ✓ | Settings. The Edge voice group appears only in Edge |
 
 ## Local voices (Kokoro)
 Kokoro runs in Docker Desktop on your GPU at `http://localhost:8880`.
@@ -62,4 +63,3 @@ The first run downloads several GB. Kokoro is ready when `docker logs -f kokoro`
 You can also use Docker Desktop's **Containers** page: the ▶ / ■ / ↻ buttons next to `kokoro` start, stop and restart it.
 
 **If the popup says "Kokoro isn't running":** make sure Docker Desktop shows **Engine running**, then run `docker start kokoro`.
-| `popup.*` | ✓ | ✓ | Settings. The Edge voice group appears only in Edge |
