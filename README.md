@@ -47,6 +47,12 @@ docker run -d --gpus all -p 127.0.0.1:8880:8880 --name kokoro --restart unless-s
 - `--restart unless-stopped` starts Kokoro again whenever Docker Desktop starts.
 - `latest-cu128` is the build for Blackwell / RTX 50-series GPUs.
 
+**No NVIDIA GPU?** Use the CPU build instead. It has the same voices and the same API, including word timings, so the extension works unchanged. It needs about 1–2 GB of RAM and usually generates speech faster than real time on a modern CPU. At 2–3× speed a slower CPU may stutter.
+```powershell
+docker run -d -p 127.0.0.1:8880:8880 --name kokoro --restart unless-stopped ghcr.io/remsky/kokoro-fastapi-cpu:latest
+```
+Run either the GPU or the CPU container, not both: they use the same name and port. For the CPU build, use `kokoro-fastapi-cpu:latest` in place of `kokoro-fastapi-gpu:latest-cu128` in the update steps below.
+
 The first run downloads several GB. Kokoro is ready when `docker logs -f kokoro` shows `Uvicorn running`, or when http://localhost:8880/web opens a test player. Then choose a Kokoro voice in the popup.
 
 **Everyday commands** (PowerShell, with Docker Desktop running):
