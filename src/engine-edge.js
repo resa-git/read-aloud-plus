@@ -1,6 +1,6 @@
 // Edge's built-in "Online (Natural)" voices through the Web Speech API. EDGE ONLY.
-// Free, needs no Azure key. The popup offers these voices only when the browser has them.
-// Same interface as AzureEngine.
+// Free, no setup. The popup offers these voices only when the browser has them.
+// Same interface as KokoroEngine (see player.js).
 //
 // Sentences are spoken one at a time, each started from the previous one's onend.
 // Queuing them all at once broke when reading restarted mid-way (click elsewhere while reading):

@@ -1,17 +1,17 @@
 // Shared streaming playback for engines that deliver raw 24 kHz PCM plus word timings
-// (Azure and local Kokoro). Used in BOTH Chrome and Edge.
+// (Kokoro in the browser). Used in BOTH Chrome and Edge.
 // Plays audio back-to-back on the Web Audio clock and fires onWord exactly when a word is heard.
 //
 // A "source" only turns one sentence into audio + words:
-//   source.speak(text, { voice, rate }, { audio(Int16Array), word(text, seconds), done(), fail(msg) })
+//   source.speak(text, { voice, rate }, { audio(Int16Array), word(text, seconds), note(msg), done(), fail(msg) })
 //   source.close()   // cancel whatever is in flight
 //
 // Engine interface (EdgeEngine has the same one):
-//   start(chunks, { voice, rate }, { onChunk(i), onWord(i, start, len), onEnd(), onError(msg) })
+//   start(chunks, { voice, rate }, { onChunk(i), onWord(i, start, len), onNote(msg), onEnd(), onError(msg) })
 //   pause(), resume(), stop()
 
 function streamEngine(source) {
-  const RATE = 24000; // both Azure and Kokoro send 24 kHz 16-bit mono
+  const RATE = 24000; // Kokoro sends 24 kHz 16-bit mono
   const AHEAD = 15;   // seconds of audio to synthesize ahead of playback
   let ctx, timer, cb, cfg, chunks, next, queue, busy, playhead, sid = 0;
   let stopped = true;
@@ -25,6 +25,7 @@ function streamEngine(source) {
     const handlers = {
       audio: (pcm) => s === sid && pcm.length && play(turn, pcm),
       word: (w, sec) => s === sid && word(turn, w, sec),
+      note: (msg) => s === sid && cb.onNote?.(msg), // e.g. model download progress
       done: () => {
         if (s !== sid) return;
         turn.base ??= playhead; // sentence produced no audio: don't block the queue

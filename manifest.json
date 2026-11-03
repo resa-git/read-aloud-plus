@@ -1,10 +1,12 @@
 {
   "manifest_version": 3,
   "name": "Read Aloud Plus",
-  "version": "0.1.0",
-  "description": "Read any page aloud with Azure, local Kokoro or Edge voices. Click a word to start there; sentence and word highlighting.",
-  "permissions": ["storage"],
-  "host_permissions": ["https://*.tts.speech.microsoft.com/*", "http://localhost:8880/*"],
+  "version": "0.2.0",
+  "description": "Read any page aloud with Kokoro voices running in your browser, or Edge voices. Click a word to start there; sentence and word highlighting.",
+  "permissions": ["storage", "offscreen"],
+  "content_security_policy": { "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'" },
+  "cross_origin_embedder_policy": { "value": "require-corp" },
+  "cross_origin_opener_policy": { "value": "same-origin" },
   "background": { "service_worker": "background.js" },
   "action": { "default_popup": "popup.html", "default_title": "Read Aloud Plus" },
   "commands": {
@@ -20,8 +22,7 @@
         "src/platform.js",
         "src/text.js",
         "src/player.js",
-        "src/engine-azure.js",
-        "src/engine-local.js",
+        "src/engine-kokoro.js",
         "src/engine-edge.js",
         "src/reader.js"
       ],

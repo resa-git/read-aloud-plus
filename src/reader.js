@@ -1,6 +1,6 @@
 // Click-to-read, highlighting and the floating control bar. Same code in Chrome and Edge.
 
-const ENGINES = { azure: AzureEngine, local: LocalEngine, edge: EdgeEngine };
+const ENGINES = { web: KokoroEngine, edge: EdgeEngine };
 const RATES = [0.75, 1, 1.25, 1.5, 1.75, 2, 2.5, 3];
 const RELOAD = 'The extension was updated. Press F5 to reload this page.';
 const settings = { voice: DEFAULT_VOICE, rate: 1, mode: false };
@@ -35,14 +35,18 @@ function run(chunks) {
   engine?.stop();
   if (!chunks.length) return;
   if (!chrome.runtime?.id) return bar.show(RELOAD); // extension was reloaded after this page loaded
-  const [kind, name] = settings.voice.split(/:(.*)/); // "azure:en-US-..." / "edge:Microsoft ..."
-  engine = ENGINES[kind] ?? AzureEngine;
+  const [kind, name] = settings.voice.split(/:(.*)/); // "web:af_heart" / "edge:Microsoft ..."
+  engine = ENGINES[kind] ?? KokoroEngine;
   list = chunks;
   cur = chunks[0].start;
   paused = false;
   bar.show();
   engine.start(chunks, { voice: name, rate: +settings.rate }, {
-    onChunk: (i) => mark(hlSentence, chunks[i].start, chunks[i].text.length),
+    onChunk: (i) => {
+      bar.note('');
+      mark(hlSentence, chunks[i].start, chunks[i].text.length);
+    },
+    onNote: (msg) => bar.note(msg),
     onWord: (i, at, len) => {
       cur = chunks[i].start + at;
       follow(mark(hlWord, cur, len));
@@ -145,5 +149,6 @@ const bar = (() => {
     },
     hide: () => host.remove(),
     paused: (p) => ($('pp').textContent = p ? '▶' : '⏸'),
+    note: (msg) => ($('msg').textContent = msg),
   };
 })();
