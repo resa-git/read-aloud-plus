@@ -1,10 +1,9 @@
-// Click-to-read, highlighting and the floating control bar. Same code in Chrome and Edge;
-// the only browser-specific line is which engines get registered.
+// Click-to-read, highlighting and the floating control bar. Same code in Chrome and Edge.
 
-const ENGINES = { azure: AzureEngine, local: LocalEngine, ...(IS_EDGE && { edge: EdgeEngine }) };
+const ENGINES = { azure: AzureEngine, local: LocalEngine, edge: EdgeEngine };
 const RATES = [0.75, 1, 1.25, 1.5, 1.75, 2, 2.5, 3];
 const RELOAD = 'The extension was updated. Press F5 to reload this page.';
-const settings = { voice: 'azure:en-US-JennyNeural', rate: 1, mode: false };
+const settings = { voice: DEFAULT_VOICE, rate: 1, mode: false };
 
 // CSS Custom Highlight API: paints ranges without touching the page's DOM.
 const hlSentence = new Highlight(), hlWord = new Highlight();

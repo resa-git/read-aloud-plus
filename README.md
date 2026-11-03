@@ -22,7 +22,7 @@ Reads web pages aloud with Azure neural voices, local Kokoro on your own GPU, or
 
 | File | Chrome | Edge | Job |
 |---|---|---|---|
-| `src/platform.js` | ✓ | ✓ | **The only browser switch** (`IS_EDGE`) |
+| `src/platform.js` | ✓ | ✓ | **The only browser switch** (`IS_EDGE`): default voice is Edge's Jenny in Edge, Kokoro's Heart in Chrome |
 | `src/player.js` | ✓ | ✓ | Shared gapless playback and word timing for Azure and Kokoro |
 | `src/engine-azure.js` | ✓ | ✓ | Azure streaming WebSocket |
 | `src/engine-local.js` | ✓ | ✓ | Kokoro on your GPU (`localhost:8880`, via `background.js`) |
@@ -30,7 +30,7 @@ Reads web pages aloud with Azure neural voices, local Kokoro on your own GPU, or
 | `src/text.js` | ✓ | ✓ | Page text from the clicked word onward, sentence splitting, mapping text positions back to the page |
 | `src/reader.js` | ✓ | ✓ | Click handling, highlighting (CSS Custom Highlight API), floating bar |
 | `background.js` | ✓ | ✓ | Loads `.env`, relays Kokoro requests, keyboard shortcut |
-| `popup.*` | ✓ | ✓ | Settings. The Edge voice group appears only in Edge |
+| `popup.*` | ✓ | ✓ | Settings. The Edge voice group appears when the browser has Edge's voices |
 
 ## Local voices (Kokoro)
 Kokoro runs in Docker Desktop on your GPU at `http://localhost:8880`.
